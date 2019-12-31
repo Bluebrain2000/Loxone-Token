@@ -1,5 +1,5 @@
 #!/usr/bin/perl
-use CGI::Carp qw(fatalsToBrowser);		# Fehlermeldungen an den Browser ausgeben (sonst nur in der Konsole sichtbar)
+use CGI::Carp qw(fatalsToBrowser);	# Fehlermeldungen an den Browser ausgeben (sonst nur in der Konsole sichtbar)
 print "Content-type: text/plain\n\n";	# für die Ausgabe im Browser, nur plain text, keine Lust auf HTML Formatierung 
 
 # Crashkurs in Perl damit das Lesen vom Code ggf. einfacher fällt :)
@@ -11,9 +11,9 @@ print "Content-type: text/plain\n\n";	# für die Ausgabe im Browser, nur plain t
 $miniserver_ip = "192.168.0.21";
 $user = 'alexa';
 $password = '********';
-$permission = 4;								# 4=App (Token ist mehrere Wochen gültig) siehe schrottige Loxone API Doku
+$permission = 4;				# 4=App (Token ist mehrere Wochen gültig) siehe schrottige Loxone API Doku
 $uuid = "aaaaaaaa-bbbb-cccc-dddddddddddddd01";	# beliebige ID mit der sich die Anwendung beim Miniserver identifiziert.
-$info = "TVserver";								# beliebiger Name von der App o.ä.
+$info = "TVserver";				# beliebiger Name von der App o.ä.
 
 # notwendige Module laden
 # (werden am Server z.B. mit "cpan -i URI::Escape" installiert)
@@ -22,7 +22,7 @@ use JSON::Parse qw(parse_json valid_json);	# JSON parser, es werden nur die Funk
 use Digest::SHA1  qw(sha1_hex);
 use Digest::HMAC_SHA1 qw(hmac_sha1_hex);
 use MIME::Base64;			# Base64 en/decoder
-use Crypt::Mode::CBC;		# universelles Crypto-Modul, wir verwenden aber nur AES
+use Crypt::Mode::CBC;			# universelles Crypto-Modul, wir verwenden aber nur AES
 use Crypt::PK::RSA;			# RSA Crypto-Modul
 use URI::Escape;			# Modul zum URI/URL escapen
 
@@ -135,7 +135,7 @@ $pub = Crypt::PK::RSA->new(\$publicKey_content);
 # /!\ WICHTIG: der 2. Parameter, 'v1.5' sagt dem Modul, dass PKCS1 Padding verwendet werden soll statt dem default oaep Padding
 $session_key = $pub->encrypt($payload, 'v1.5');
 # Base64 encodieren
-$session_key_base64 = encode_base64($session_key,'');
+$session_key_base64 = encode_base64($session_key,'');	# der 2. Parameter '' sorgt dafür, dass kein Zeilenumbruch gemacht wird, sonst Standard nach 76 Zeichen
 print "session_key_base64: $session_key_base64\n";
 # und noch URI escapen
 $enc_session_key_base64 = uri_escape($session_key_base64);
@@ -188,13 +188,3 @@ sub date {
 	if ($CCyear < 50) { $CCyear += 100; }
     $CCyear = $CCyear+1900;
 }
-
-
-
-
-
-
-
-
-
-
