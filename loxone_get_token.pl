@@ -153,7 +153,7 @@ print "\n";
 # Zum Miniserver schicken und die Ausgabe anzeigen.
 $content = get($url);
 # Wenn alles richtig gelaufen ist, dann sollte das jetzt die JSON Response mit dem Token sein
-# z.B. {"LL":{"control":"dev/sys/gettoken/6d5478a6ad9b9c0c8d2c3287452c8880f1f8c6c3/alexa/4/aaaaaaaa-bbbb-cccc-dddddddddddddd01/TVserver","value":{"token":"A12D33BBE29EE34CCCD070E01CEAB94A2D9FBA09","key":"45344331344435393432334646433430463345303542393944313745353637413433444239394634","validUntil":351877773,"tokenRights":1668,"unsecurePass":false},"code":"200"}}
+# z.B. {"LL":{"control":"dev/sys/gettoken/6d5478a6ad9b9c0c8d2c3287452c8880f1f8c6c3/alexa/4/aaaaaaaa-bbbb-cccc-dddddddddddddd01/TVserver","value":{"token":"A12D33BBE29EE3400CD070E01CEAB94A2D9FBA09","key":"3B344331344435393432334646433430463345303542393944313745353637413433444239394634","validUntil":351877773,"tokenRights":1668,"unsecurePass":false},"code":"200"}}
 print $content;
 
 print "\n\n";
@@ -176,15 +176,14 @@ if(valid_json($content)) {
 
 # Datum und Uhrzeit aus Unixtime berechnen
 sub date {
-    local ($CCtime) = @_;
-    ($CCsec,$CCmin,$CChour,$CCmday,$CCmon,$CCyear,$CCwday) = (localtime($CCtime))[0,1,2,3,4,5,6];
-	$CCmonname=$Months[$CCmon];
-    if ($CCsec < 10) { $CCsec = "0$CCsec"; }
-    if ($CCmin < 10) { $CCmin = "0$CCmin"; }
-    if ($CChour < 10) { $CChour = "0$CChour"; }
-    if ($CCmday < 10) { $CCmday = "0$CCmday"; }
-    $CCmon++;
-    if ($CCmon < 10) { $CCmon = "0$CCmon"; }
+	local ($CCtime) = @_;
+	($CCsec,$CCmin,$CChour,$CCmday,$CCmon,$CCyear,$CCwday) = (localtime($CCtime))[0,1,2,3,4,5,6];
+	if ($CCsec < 10) { $CCsec = "0$CCsec"; }
+	if ($CCmin < 10) { $CCmin = "0$CCmin"; }
+	if ($CChour < 10) { $CChour = "0$CChour"; }
+	if ($CCmday < 10) { $CCmday = "0$CCmday"; }
+	$CCmon++;
+	if ($CCmon < 10) { $CCmon = "0$CCmon"; }
 	if ($CCyear < 50) { $CCyear += 100; }
-    $CCyear = $CCyear+1900;
+	$CCyear = $CCyear+1900;
 }
